@@ -19,7 +19,7 @@
 
 Super Ping 基于 [darrenprx/lolPing](https://github.com/darrenprx/lolPing) 的轮盘交互与资源进行 macOS 原生重构和二次开发，并非原仓库的官方版本。感谢原作者 Danrui Meng。新增可配置动作、带 Ping 标记的截图、Codex 联动、应用与浏览器上下文识别以及原生菜单栏设置。
 
-本项目代码以 MIT 许可证发布，原项目的 MIT 版权声明保留在 [THIRD_PARTY_NOTICES.txt](THIRD_PARTY_NOTICES.txt)。Ping 图标（包括应用问号图标）与音效来自原仓库，属于 Riot Games，不包含在 MIT 授权中。Super Ping 不受 Riot Games 认可或赞助。
+本项目代码以 MIT 许可证发布，原项目的 MIT 版权声明保留在 [THIRD_PARTY_NOTICES.txt](THIRD_PARTY_NOTICES.txt)。Ping 图标（包括应用问号图标）、表情与音效来自原仓库，属于 Riot Games，不包含在 MIT 授权中。Super Ping 不受 Riot Games 认可或赞助。
 
 ## 下载安装
 
@@ -86,7 +86,13 @@ CLANG_MODULE_CACHE_PATH="$PWD/.build/clang-cache" swift test --disable-sandbox
 
 ## 移植范围与验证
 
-已实现八向 Ping、原始图标与音效、原生波纹动画、跨桌面浮层、菜单栏、暂停快捷键、设置持久化和自定义动作。轮盘几何参数已与上游对齐，包含灰金色静态图标、彩色悬停放大及渐变扇区高亮。动画改为三重扩散波纹、弹出与浮动；全力进攻双图碰撞等细节尚未逐帧复刻。尚未移植上游表情轮盘、轮盘重排、自定义触发键、自动更新和登录启动。
+0.8.0 对齐上游提交 `f24a51e5a11c2b31dab72d89a571cc4025ad3c98` 的 macOS 本地功能：11 种 Ping、全力进攻双图碰撞、大小/时长/音量设置、多 Ping 并发；拖放重排轮盘、独立中心点击内容、自定义键盘或鼠标侧键触发、点击发送与暂停快捷键；44 个原版动态表情及音效、独立表情轮盘、最多 24 个自定义 PNG/JPEG/GIF/WebP 表情及改名/删除；中英/系统语言、系统深浅外观、登录启动、菜单栏与校验后的更新下载。原有截图、Codex、浏览器上下文和自定义动作均保留。
+
+按要求排除房间和全部房间联网功能。上游全屏游戏检测仅支持 Windows，不属于上游 Mac 功能。设置界面采用 Mac 原生控件；浮层沿用上游几何、素材和动画时序。
+
+![原生表情轮盘](docs/images/emote-wheel.png)
+
+验证：`swift test` 运行核心回归测试，`bash scripts/verify-parity.sh` 验证真实绘制代码、素材、自定义图片导入和原生输入路由（需要 macOS 图形会话）。详细证据及未实测的系统流程见 [对齐清单](docs/UPSTREAM_PARITY.md)。
 
 自动测试覆盖八方向选择、中心取消、默认动作、配置序列化、实际 shell 参数转义及 Codex 命令构造。系统授权、真实鼠标手势和 Codex 网络回答需要在授权后的桌面完成验收；构建测试不等于这些流程已验证。
 

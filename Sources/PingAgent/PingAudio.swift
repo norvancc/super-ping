@@ -8,6 +8,8 @@ final class PingAudio {
     private let queue = DispatchQueue(label: "dev.pingagent.audio", qos: .userInitiated)
     private var players: [String: [AVAudioPlayer]] = [:]
     private let lock = NSLock()
+    private var volume: Float = 0.7
+    func setVolume(_ value: Double) { queue.async { self.volume = Float(max(0, min(100, value)) / 100) } }
     private var hoverGate = HoverSoundGate()
 
     func prepare(bundle: Bundle, names: [String]) {
@@ -40,8 +42,29 @@ final class PingAudio {
         queue.async { [self] in playAvailable(name) }
     }
 
+    func prepareFiles(_ urls: [URL]) {
+        queue.async { [self] in
+            for url in urls where players[url.path] == nil {
+                players[url.path] = (0..<3).compactMap { _ in
+                    guard let player = try? AVAudioPlayer(contentsOf: url), player.prepareToPlay() else { return nil }
+                    return player
+                }
+            }
+        }
+    }
+    func playFile(_ url: URL) {
+        queue.async { [self] in
+            let key = url.path
+            if players[key] == nil, let player = try? AVAudioPlayer(contentsOf: url) { player.prepareToPlay(); players[key] = [player] }
+            playAvailable(key)
+        }
+    }
     private func playAvailable(_ name: String) {
+        guard volume > 0, players.values.flatMap({ $0 }).filter({ $0.isPlaying }).count < 8 else { return }
+        if players[name]?.allSatisfy({ $0.isPlaying }) == true, let url = players[name]?.first?.url,
+           let extra = try? AVAudioPlayer(contentsOf: url), extra.prepareToPlay() { players[name]?.append(extra) }
         guard let voice = players[name]?.first(where: { !$0.isPlaying }) else { return }
+        voice.volume = volume
         voice.currentTime = 0
         voice.play()
     }

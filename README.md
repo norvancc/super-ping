@@ -102,11 +102,19 @@ To regenerate the README animation on macOS, install `ffmpeg` and run `bash scri
 
 ## Scope and validation
 
-Implemented: eight-direction wheel, hover highlights, original ping assets, native overlays, optional sound, menu bar settings, pause shortcut, persistent configuration, customizable actions and Codex context.
+Version 0.8.0 implements the upstream **local macOS features** against commit `f24a51e5a11c2b31dab72d89a571cc4025ad3c98`:
 
-Not implemented: the upstream emote wheel, wheel reordering, configurable trigger keys, automatic updates and launch at login. Some animation details differ from the original.
+- All 11 Pings, original artwork/audio, All In clash, size/duration/volume controls and concurrent overlays.
+- Drag-and-drop wheel editing, independent click center, configurable keyboard or Mouse 4/5 triggers, click sending, pause shortcut and hover sound.
+- All 44 animated emotes and sounds, a separate emote wheel, and up to 24 custom PNG/JPEG/GIF/WebP emotes with rename/remove support.
+- System/English/Chinese UI, light/dark appearance, launch at login, menu bar controls and verified, user-initiated update downloads.
+- Existing screenshot, Codex, application/browser context and custom actions remain available.
 
-The 0.7.0 release passes 26 automated tests covering gesture selection/cancellation, capture sequencing, configuration compatibility, URL validation, shell quoting, prompt context and command construction. These checks do not replace testing real desktop permissions, gestures or a live Codex response. Full browser-context behavior depends on Automation permission and the browser's scripting support.
+Rooms and all networked room features are excluded. The upstream fullscreen-game detector is Windows-only and is not part of its macOS implementation. The settings interface uses native macOS controls; overlay geometry, assets and animation timings follow the upstream implementation.
+
+![Native emote wheel](docs/images/emote-wheel.png)
+
+Run `swift test` for the core regression suite and `bash scripts/verify-parity.sh` for production-renderer, asset, import and native input-routing checks. The latter needs a macOS graphical session. See [the parity audit](docs/UPSTREAM_PARITY.md) for evidence and hardware/system flows not exercised by automated tests. Browser context still depends on Automation permission and browser scripting support.
 
 ## Origin and license
 
@@ -114,4 +122,4 @@ Super Ping is a **native macOS rewrite and derivative project based on [darrenpr
 
 Source code is licensed under the [MIT License](LICENSE). The original MIT copyright notice is preserved in [THIRD_PARTY_NOTICES.txt](THIRD_PARTY_NOTICES.txt), which is also bundled with the app.
 
-The ping icons (including the question-mark app icon) and sounds come from the upstream repository and are © Riot Games, Inc. They are **not covered by the MIT License**. Super Ping is not endorsed by or affiliated with Riot Games. See the third-party notices for the full attribution.
+The ping icons (including the question-mark app icon) emotes and sounds come from the upstream repository and are © Riot Games, Inc. They are **not covered by the MIT License**. Super Ping is not endorsed by or affiliated with Riot Games. See the third-party notices for the full attribution.

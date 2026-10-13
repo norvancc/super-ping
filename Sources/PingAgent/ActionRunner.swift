@@ -2,11 +2,6 @@ import AppKit
 import CoreGraphics
 import PingCore
 
-struct ActionFailure: LocalizedError {
-    let message: String
-    var errorDescription: String? { message }
-}
-
 @MainActor
 final class ActionRunner {
     let store: Store
