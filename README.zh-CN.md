@@ -2,6 +2,17 @@
 
 [English](README.md) | **简体中文**
 
+![Super Ping 演示：按住 Option、拖动选择、松开发送](docs/images/ping-demo.gif)
+
+*按住 Option → 拖动高亮 → 松开发送。演示使用应用实际轮盘和动画绘制代码生成，不执行外部动作。*
+
+<details>
+<summary>查看静态预览</summary>
+
+![Super Ping 问号选中状态](docs/images/ping-wheel.png)
+
+</details>
+
 基于 [lolPing](https://github.com/darrenprx/lolPing) 的交互和资源，用 Swift + AppKit + SwiftUI 重构二次开发的原生菜单栏应用，无 Electron、Node 或 WebView 运行时。macOS 13+，可在 Apple Silicon / Intel 上从源码构建。正式发布为 Apple Silicon + Intel 通用包。
 
 ## 项目来源与二次开发
@@ -70,6 +81,8 @@ CLANG_MODULE_CACHE_PATH="$PWD/.build/clang-cache" swift test --disable-sandbox
 ```
 
 输出 `dist/Super Ping.app`，包含所需资源。默认 ad-hoc 签名；可使用 `SIGNING_IDENTITY` 指定自己的开发者签名。公开分发前需自行完成 Developer ID 签名和公证。本地重新构建后，macOS 可能要求移除并重新添加辅助功能权限。
+
+在 macOS 安装 `ffmpeg` 后，运行 `bash scripts/build-demo.sh` 可重新生成 README 演示；它使用实际原生绘制代码和预设鼠标轨迹，不采集桌面内容。
 
 ## 移植范围与验证
 

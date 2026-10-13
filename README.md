@@ -2,6 +2,17 @@
 
 **English** | [简体中文](README.zh-CN.md)
 
+![Super Ping demo: hold Option, drag to select, and release to send a ping](docs/images/ping-demo.gif)
+
+*Hold Option → drag to highlight → release to ping. Rendered with the app's native wheel and animation code; this demo does not run external actions.*
+
+<details>
+<summary>Static preview</summary>
+
+![Super Ping question-mark selection](docs/images/ping-wheel.png)
+
+</details>
+
 A native macOS ping wheel rebuilt from [darrenprx/lolPing](https://github.com/darrenprx/lolPing), with customizable actions, screenshots that retain the ping marker, and Codex integration. Built with Swift, AppKit and SwiftUI—no Electron, Node.js or WebView runtime.
 
 Requires **macOS 13 or later**. Release packages support both **Apple Silicon and Intel**. The app's settings interface is currently in Chinese; documentation is available in English and Chinese.
@@ -86,6 +97,8 @@ bash scripts/package-release.sh
 ```
 
 For a signed and notarized release, set `SIGNING_IDENTITY` to your Developer ID identity and `NOTARY_PROFILE` to your saved notarytool profile, then run the same packaging script. This submits the app and DMG to Apple's notarization service and attaches their tickets. Credentials and signing keys should never be committed to the repository.
+
+To regenerate the README animation on macOS, install `ffmpeg` and run `bash scripts/build-demo.sh`. It uses the production native renderer with a scripted pointer path, without capturing the desktop.
 
 ## Scope and validation
 
