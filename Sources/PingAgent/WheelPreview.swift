@@ -4,7 +4,7 @@ import PingCore
 final class WheelPreview {
     private var window: NSWindow?
     private var timer: Timer?
-    func show(onSend: @escaping (Ping, NSPoint) -> Void, onHover: @escaping () -> Void) {
+    func show(options: Options, onSend: @escaping (Ping, NSPoint) -> Void, onHover: @escaping () -> Void) {
         if let window { window.makeKeyAndOrderFront(nil); return }
         let root = NSView(frame: NSRect(x: 0, y: 0, width: 620, height: 680))
         let title = NSTextField(labelWithString: "轮盘试用 · 鼠标悬停高亮，拖动后松开发送")
@@ -14,6 +14,7 @@ final class WheelPreview {
         label.textColor = .secondaryLabelColor
         label.frame = NSRect(x: 25, y: 15, width: 575, height: 24); root.addSubview(label)
         let canvas = WheelCanvas(frame: NSRect(x: 10, y: 40, width: 600, height: 600))
+        canvas.options = options
         canvas.interactive = true
         var last: Ping?
         canvas.onHover = { ping in
@@ -28,7 +29,7 @@ final class WheelPreview {
         root.addSubview(canvas)
         let window = NSWindow(contentRect: root.frame, styleMask: [.titled, .closable], backing: .buffered, defer: false)
         window.title = "Super Ping · 轮盘试用"; window.contentView = root; window.isReleasedWhenClosed = false
-        window.acceptsMouseMovedEvents = true; window.appearance = NSAppearance(named: .darkAqua)
+        window.acceptsMouseMovedEvents = true
         window.center(); window.makeKeyAndOrderFront(nil); self.window = window
         let timer = Timer(timeInterval: 1 / 60, repeats: true) { [weak canvas, weak window] _ in
             if window?.isVisible == true && canvas?.isWheelAnimating == true { canvas?.needsDisplay = true }

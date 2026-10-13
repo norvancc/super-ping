@@ -23,7 +23,7 @@ SOFTWARE.
 ---
 
 This license covers lolPing's source code only. The ping icons in
-assets/textures and the sounds in assets/sounds are © Riot Games, Inc.,
+assets/textures, the emotes in assets/emotes and the sounds in assets/sounds are © Riot Games, Inc.,
 extracted from League of Legends, and are not licensed under the MIT License.
 lolPing isn't endorsed by Riot Games and doesn't reflect the views or opinions
 of Riot Games or anyone officially involved in producing or managing Riot Games

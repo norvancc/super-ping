@@ -3,11 +3,12 @@ import Combine
 import PingCore
 
 final class Store: ObservableObject {
-    @Published var configuration: Configuration { didSet { save() } }
+    @Published var configuration: Configuration { didSet { Localized.preference = configuration.options.language; EmoteLibrary.shared.custom = configuration.options.customEmotes; save() } }
     @Published var status = "按住 ⌥ Option，按下鼠标并拖向一个 Ping，松开鼠标执行。"
     @Published var inputStatus = "正在连接全局手势…"
     @Published var inputReady = false
     @Published var enabled = true
+    @Published var updateProgress: Double?
     let directory: URL
     private let file: URL
     init() {
@@ -23,6 +24,9 @@ final class Store: ObservableObject {
                 warning = "设置读取失败，已保留原文件并恢复默认值：\(error.localizedDescription)"
             }
         } else { configuration = Configuration() }
+        Localized.preference = configuration.options.language
+        EmoteLibrary.shared.custom = configuration.options.customEmotes
+        enabled = configuration.options.enabledOnStart
         if let warning { status = warning }
     }
     private func save() {

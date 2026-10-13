@@ -8,6 +8,7 @@ mkdir -p .build/demo-frames docs/images
 swiftc -parse-as-library -I "$BIN/Modules" \
     scripts/render-demo.swift Sources/PingAgent/Overlay.swift \
     Sources/PingAgent/PingAssets.swift Sources/PingAgent/PingAudio.swift \
+    Sources/PingAgent/EmoteLibrary.swift Sources/PingAgent/ActionFailure.swift \
     "$BIN/PingAgent.build/DerivedSources/resource_bundle_accessor.swift" \
     "$BIN"/PingCore.build/*.o -o .build/render-demo
 .build/render-demo "$PWD/.build/demo-frames"
